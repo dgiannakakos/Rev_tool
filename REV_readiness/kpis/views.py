@@ -34,6 +34,32 @@ def get_kpis(request):
     kpi_data = load_kpi_data()
     return JsonResponse(kpi_data, safe=False)
 
+def determine_level_kpis(score):
+    if 0 <= score < 0.2:
+        return "Very Low"
+    elif 0.2 <= score < 0.4:
+        return "Low"
+    elif 0.4 <= score < 0.6:
+        return "Medium"
+    elif 0.6 <= score < 0.8:
+        return "High"
+    elif 0.8 <= score <= 1:
+        return "Very High"
+    return None
+
+def determine_risk_level(score):
+    if 1 <= score < 5:
+        return "Very Low"
+    elif 5 <= score < 10:
+        return "Low"
+    elif 10 <= score < 15:
+        return "Medium"
+    elif 15 <= score < 20:
+        return "High"
+    elif 20 <= score <= 25:
+        return "Very High"
+    return None
+
 @csrf_exempt
 def submit_kpi_data(request):
     """Endpoint return KPI results (selected and added)."""
@@ -111,9 +137,16 @@ def submit_kpi_data(request):
                     except ValueError as e:
                         return JsonResponse({'error': str(e)}, status=400)
 
-            # Calculate averages for each category
-            category_averages = {category: (sum(distances) / len(distances)) if distances else "No KPIS chosen/added for that category"
-                                 for category, distances in category_totals.items()}
+            category_averages = {}
+            for category, distances in category_totals.items():
+                if distances:
+                    avg_score = sum(distances) / len(distances)
+                    category_averages[category] = {
+                        "Category Score": avg_score,
+                        "Level": determine_level_kpis(avg_score)
+                    }
+                else:
+                    category_averages[category] = "No KPIS chosen/added for that category"
 
             return JsonResponse(category_averages)
 
@@ -148,9 +181,9 @@ def process_kpi(category, kpi_id, values, category_totals, a, b):
 
     # Calculate distance
     if current_value > target_value:
-        distance = abs(target_value - current_value) / current_value
+        distance = target_value / current_value
     else:
-        distance = abs(target_value - current_value) / target_value
+        distance = current_value / target_value
     time_adjusted_distance = distance * math.exp(-(current_date / target_date) ** a)
     final_distance = time_adjusted_distance * (data_quality / 5) ** (1 / b)
 
@@ -242,7 +275,8 @@ def submit_barriers_data(request):
                 persona_results[persona] = {
                     'Likelihood': round(likelihood, 2),
                     'Impact': round(impact, 2),
-                    'Risk Score': round(risk_score, 2)
+                    'Risk Score': round(risk_score, 2),
+                    'Level': determine_risk_level(risk_score)
                 }
 
             return JsonResponse(persona_results)

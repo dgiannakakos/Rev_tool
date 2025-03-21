@@ -18,7 +18,7 @@ def test_get_kpis():
 def test_submit_kpis():
 
     data = {
-        "alpha": 5,
+        "alpha": 3,
         "beta": 5,
             "kpis": {
                 "Social": {
@@ -50,11 +50,11 @@ def test_submit_kpis():
                 },
                 "Technological": {
                     "SOC1": {
-                        "current_value": 99,
-                        "target_value": 100,
+                        "current_value": 1000,
+                        "target_value": 999,
                         "current_date": 1,
                         "target_date": 2,
-                        "data_quality": 2,
+                        "data_quality": 5,
                     }
                 }
             }
@@ -76,12 +76,12 @@ def test_submit_barriers():
         "barriers": {
             "Public Resistance": {
                 "PR01": {
-                    "likelihood": 4,
-                    "impact": 3,
+                    "likelihood": 1,
+                    "impact": 5,
                 },
                 "PR02" : {
-                    "likelihood": 3,
-                    "impact": 1
+                    "likelihood": 1,
+                    "impact": 5
                 }
             },
             "Resource Scarcity": {
@@ -129,9 +129,9 @@ def test_get_weather_variables():
 # Run all tests
 if __name__ == "__main__":
     #test_get_kpis()
-    test_submit_kpis()
+    #test_submit_kpis()
     #test_get_barriers()
-    #test_submit_barriers()
+    test_submit_barriers()
     #test_get_climate_vulnerability()
     #test_submit_climate_vulnerability()
     #test_get_weather_variables()
