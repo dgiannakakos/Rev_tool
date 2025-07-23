@@ -61,6 +61,6 @@ This project provides the endpoints and functionality of REV readiness assessmen
 See requirements.txt file
 
 ## Test the endpoints through FastAPI - Swagger UI
-- Run in terminal:  "python -m uvicorn main:app --reload" OR "py -m uvicorn main:app"
+- Run in terminal:  "python -m uvicorn main:app --reload" OR "py -m uvicorn main:app --reload"
 - Visit URL in which uvicorn runs
 - add "/docs" at the end of the URL
