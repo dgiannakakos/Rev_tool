@@ -18,6 +18,11 @@ from Climate_vulnerability import Climate_vulnerability
 
 from Weather_variables import Weather_variables
 
+
+from incentives_mapping import incentives_mapping
+from incentives import incentives
+from incentives_id import incentives_id
+
 # All KPIs in one dictionary
 KPI_CATEGORIES = {
     "Co_benefits_KPIs": Co_benefits_KPIs,
@@ -324,65 +329,93 @@ def calculate_kpi_scores(data: KPIRequest):
     return {"category_scores": result}
 
 
+
+# barrier → incentive IDs
+barrier_to_incentive_ids = {
+    item["barrier"].strip(): item["incentives"]
+    for item in incentives_id
+}
+
+# incentive name → full incentive object
+incentive_name_to_obj = {i["incentive"]: i for i in incentives}
+
+# barrier → incentive names (from incentives_mapping)
+barrier_to_incentive_names = {
+    item["barrier"].strip(): item["incentives"]
+    for item in incentives_mapping
+}
+
+# Build a fallback if you want incentive objects via ID
+id_to_incentive = {i["id"]: i for i in incentives}
+
+
 @app.post("/barriers_score")
 def calculate_barriers_scores(data: BarriersRequest):
-    # Build a mapping of category -> {barrier_id: description}
-    valid_barriers = {
-        category: set(barrier_ids.keys())
-        for category, barrier_ids in Barriers_disadvantages.items()
-    }
-
     seen_ids = set()
     category_data = {}
 
     for barrier in data.selected_barriers:
-        # Check uniqueness of barrier IDs
-        if barrier.id in seen_ids:
-            raise HTTPException(
-                status_code=400,
-                detail=f"Duplicate barrier ID found: '{barrier.id}'. Each barrier must be unique."
-            )
-        seen_ids.add(barrier.id)
+        persona = barrier.persona.value
+        barrier_id = barrier.id
 
-        # Validate that the ID exists in the proper category
-        valid_ids_in_category = valid_barriers.get(barrier.persona)
-        if not valid_ids_in_category:
-            raise HTTPException(
-                status_code=400,
-                detail=f"Invalid category/persona: '{barrier.persona}'. Must be one of: {list(Barriers_disadvantages.keys())}"
-            )
+        # Validate
+        if barrier_id in seen_ids:
+            raise HTTPException(400, f"Duplicate barrier ID: {barrier_id}")
+        seen_ids.add(barrier_id)
 
-        if barrier.id not in valid_ids_in_category:
-            raise HTTPException(
-                status_code=400,
-                detail=f"Barrier ID '{barrier.id}' not found in category '{barrier.persona}'."
-            )
+        if persona not in Barriers_disadvantages:
+            raise HTTPException(400, f"Invalid persona: {persona}")
+        if barrier_id not in Barriers_disadvantages[persona]:
+            raise HTTPException(400, f"Barrier ID '{barrier_id}' not in persona '{persona}'")
 
-        # Score calculations per category
-        category_data.setdefault(barrier.persona, {
-            "sum_numerator": 0.0,
-            "sum_likelihood": 0.0,
-            "sum_impact": 0.0
-        })
-
+        # Barrier info
+        description = Barriers_disadvantages[persona][barrier_id]
         score = barrier.likelihood * barrier.impact
-        category_data[barrier.persona]["sum_numerator"] += score
-        category_data[barrier.persona]["sum_likelihood"] += barrier.likelihood
-        category_data[barrier.persona]["sum_impact"] += barrier.impact
 
+        # Prepare category slot
+        if persona not in category_data:
+            category_data[persona] = {
+                "sum_numerator": 0.0,
+                "sum_likelihood": 0.0,
+                "sum_impact": 0.0
+            }
+
+        cat = category_data[persona]
+        cat["sum_numerator"] += score
+        cat["sum_likelihood"] += barrier.likelihood
+        cat["sum_impact"] += barrier.impact
+
+        # Try to find matching incentives
+        barrier_name = description.strip()
+        matched_ids = barrier_to_incentive_ids.get(barrier_name, [])
+        incentives_full = [id_to_incentive[i] for i in matched_ids if i in id_to_incentive]
+
+        # Store barrier info
+        cat[barrier_id] = {
+            "description": description,
+            "likelihood": barrier.likelihood,
+            "impact": barrier.impact,
+            "incentives": incentives_full  # <-- or [i["incentive"] for i in incentives_full] for names only
+        }
+
+    # Final calculation
     result = {}
 
-    for category, values in category_data.items():
+    for persona, values in category_data.items():
         a = values["sum_numerator"] / values["sum_likelihood"] if values["sum_likelihood"] else 0
         b = values["sum_numerator"] / values["sum_impact"] if values["sum_impact"] else 0
         c = a * b
 
-        result[category] = {
-            "Persona impact": round(a, 2),
-            "Persona likelihood": round(b, 2),
-            "Persona Risk score": round(c, 2),
-            "Risk level": determine_risk_level(c)
-        }
+        # Cleanup helpers
+        for k in ["sum_numerator", "sum_likelihood", "sum_impact"]:
+            values.pop(k)
+
+        values["Persona impact"] = round(a, 2)
+        values["Persona likelihood"] = round(b, 2)
+        values["Persona Risk score"] = round(c, 2)
+        values["Risk level"] = determine_risk_level(c)
+
+        result[persona] = values
 
     return result
 
