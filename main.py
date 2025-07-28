@@ -23,7 +23,7 @@ from incentives_mapping import incentives_mapping
 from incentives import incentives
 from incentives_id import incentives_id
 
-# All KPIs in one dictionary
+# All predefined KPIs in one dictionary
 KPI_CATEGORIES = {
     "Co_benefits_KPIs": Co_benefits_KPIs,
     "Economic_KPIs": Economic_KPIs,
@@ -32,6 +32,7 @@ KPI_CATEGORIES = {
     "Technological_KPIs": Technological_KPIs
 }
 
+# Initialize custom KPIs (added by the user) dictionary structure
 custom_kpis: Dict[str, Dict[str, Dict[str, Dict[str, str]]]] = {}
 
 
@@ -131,7 +132,7 @@ def calculate_kpi_score(
 
     else:
         if target_value == 0:
-            raise ValueError("Target value cannot be zero.")
+            raise ValueError("Target value cannot be zero when current value is zero.")
         distance = current_value / target_value
 
     time_adjusted_distance = distance * math.exp(-(current_date / target_date) ** a)
@@ -275,7 +276,7 @@ def add_custom_kpi(kpi: CustomKPIInput):
 
 @app.post("/kpis_score")
 def calculate_kpi_scores(data: KPIRequest):
-    category_scores: Dict[str, List[float]] = {}
+    category_scores: Dict[str, Dict] = {}
     seen_ids = set()
 
     for kpi in data.selected_kpis:
@@ -294,7 +295,7 @@ def calculate_kpi_scores(data: KPIRequest):
                 detail=f"target_date ({kpi.target_date}) must be greater than current_date ({kpi.current_date}) for KPI '{kpi.id}'"
             )
 
-        # Ensure the ID exists in the correct category
+        # Lookup
         predefined_data = KPI_CATEGORIES.get(kpi.category.value, {})
         custom_data = custom_kpis.get(kpi.category.value, {})
 
@@ -316,18 +317,45 @@ def calculate_kpi_scores(data: KPIRequest):
         except ValueError as e:
             raise HTTPException(status_code=400, detail=str(e))
 
-        category_scores.setdefault(kpi.category.value, []).append(score)
+        # Get name from predefined or custom data
+        kpi_name = ""
+        for subcat in predefined_data.values():
+            if kpi.id in subcat:
+                kpi_name = subcat[kpi.id].get("Name", "")
+                break
+        if not kpi_name:
+            for subcat in custom_data.values():
+                if kpi.id in subcat:
+                    kpi_name = subcat[kpi.id].get("Name", "")
+                    break
 
-    result = {
-        category: {
-            "score": round(sum(scores) / len(scores), 2),
-            "level": determine_kpi_level(round(sum(scores) / len(scores), 2))
+        # Init if needed
+        if kpi.category.value not in category_scores:
+            category_scores[kpi.category.value] = {
+                "scores": [],
+                "kpis": []
+            }
+
+        category_scores[kpi.category.value]["scores"].append(score)
+        category_scores[kpi.category.value]["kpis"].append({
+            "id": kpi.id,
+            "name": kpi_name,
+            "current_date": kpi.current_date,
+            "target_date": kpi.target_date
+        })
+
+    # Final result
+    result = {}
+    for category, data in category_scores.items():
+        scores = data["scores"]
+        avg_score = round(sum(scores) / len(scores), 2)
+        result[category] = {
+            "score": avg_score,
+            "level": determine_kpi_level(avg_score),
+            "kpis": data["kpis"]
         }
-        for category, scores in category_scores.items()
-    }
 
     return {"category_scores": result}
-
 
 
 # barrier → incentive IDs
