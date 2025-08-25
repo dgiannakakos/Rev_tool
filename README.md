@@ -7,9 +7,9 @@ This project provides the endpoints and functionality of REV readiness assessmen
 - User can edit or delete any of the added KPIs
 
 - Barriers and disadvantages: User chooses any of the available barriers 
-- A score is calculated for each barrier persona (category)
+- A score is calculated for each barrier persona (category) and different incentives for each chosen barrier are presented 
 
-- Climate vulnerability: User chooses any of the available assets and weather variables and gets climate_vulnerability insights    
+- Climate vulnerability: User chooses any of the available assets and weather variables and gets insights    
 
 - Weather variables: User gets a description of all available weather variables
 ##  Features
@@ -45,7 +45,7 @@ This project provides the endpoints and functionality of REV readiness assessmen
   Calculates the score of the KPI categories
 
 - @app.post("/barriers_score")
-  Calculates the score of the barriers personas
+  Calculates the score of the barriers personas and returns incentives
 
 - @app.post("/climate_vulnerability_text")
   Posts the climate vulnerability insights of the chosen assets

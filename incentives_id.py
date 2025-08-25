@@ -10,18 +10,19 @@ incentives_id = [
     ]
   },
   {
-    "barrier": "Limited access to  technological tools",
+    "barrier": "Limited access to technological tools",
     "incentives": [
       18,
       20
     ]
   },
   {
-    "barrier": "Abolition of funding schemes  for netmetering projects",
+    "barrier": "Abolition of funding schemes for net-metering projects",
     "incentives": [
       2,
       3,
-      24
+      24,
+      26
     ]
   },
   {
@@ -29,14 +30,16 @@ incentives_id = [
     "incentives": [
       2,
       11,
-      25
+      25,
+      27
     ]
   },
   {
     "barrier": "REVs competition with private investors",
     "incentives": [
       11,
-      24
+      24,
+      28
     ]
   },
   {
@@ -69,7 +72,7 @@ incentives_id = [
     ]
   },
   {
-    "barrier": "Lack of awareness  and literacy around renewable energy solutions",
+    "barrier": "Lack of awareness and literacy around renewable energy solutions",
     "incentives": [
       12,
       18,
@@ -120,7 +123,7 @@ incentives_id = [
     ]
   },
   {
-    "barrier": "Preference for largescale projects without strategic design or consideration for local needs",
+    "barrier": "Preference for large-scale projects without strategic design or consideration for local needs",
     "incentives": [
       10
     ]
@@ -141,7 +144,7 @@ incentives_id = [
     ]
   },
   {
-    "barrier": "Citizens feeling excluded from the decisionmaking processes",
+    "barrier": "Citizens feeling excluded from the decision-making processes",
     "incentives": [
       12,
       10
@@ -149,7 +152,7 @@ incentives_id = [
   },
   {
     "barrier": "Concerns on the selection of project beneficiaries; questions on whether participation is equitable",
-    "incentives": []
+    "incentives": [29]
   },
   {
     "barrier": "Public concerns over local microclimate effects",
@@ -160,26 +163,26 @@ incentives_id = [
   },
   {
     "barrier": "Public concerns on the proper maintenance and long-term life cycle of energy infrastructure",
-    "incentives": []
+    "incentives": [30]
   },
   {
     "barrier": "Public concerns on the inadequate management of projects",
-    "incentives": []
+    "incentives": [31]
   },
   {
     "barrier": "Complex, fragmented legislation for REVs",
-    "incentives": []
+    "incentives": [32]
   },
   {
     "barrier": "Challenge of adapting European legislation to fit national and local contexts",
-    "incentives": []
+    "incentives": [33]
   },
   {
     "barrier": "Costly and complicated administrative procedures",
-    "incentives": []
+    "incentives": [34]
   },
   {
-    "barrier": "Limited incentives in Greek law for REV/ EC projects",
-    "incentives": []
+    "barrier": "Limited incentives in Greek law for REV/EC projects",
+    "incentives": [35]
   }
 ]

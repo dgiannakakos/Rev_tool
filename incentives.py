@@ -198,5 +198,85 @@ incentives = [
     "incentive": "Cost Savings Display (Instead of Direct Monetary Incentives)",
     "explanation": "Rather than direct payments, users are motivated by seeing how much money they saved through energy-efficient actions (visualizing cost savings dynamically).",
     "source": "ENPOWER"
+  },
+  {
+    "id": 26,
+    "type": "Non-monetary",
+    "category": "Recommendation",
+    "incentive": "Recommendation 1 - Reinstate Funding for Energy Communities",
+    "explanation": "This barrier cannot be completely mitigated by the previously mentioned incentives. The removal of the net metering support scheme, without providing any other support, puts energy communities in a difficult situation as their business models relied on that scheme. National policy should therefore reintroduce dedicated funding streams for energy communities.",
+    "source": "PROSEU"
+  },
+  {
+    "id": 27,
+    "type": "Non-monetary",
+    "category": "Recommendation",
+    "incentive": "Recommendation 2 - Pair Net Billing with Adequate Incentives",
+    "explanation": "This barrier can be partially mitigated by incentives outlined before, however the shift from Net Metering to Net Billing could disproportionately discourage investment from energy communities unless accompanied by adequate incentives or subsidies. Thus, the overall effectiveness of Net Billing hinges significantly on supportive policies like dynamic pricing and BESS incentives, and targeted measures to ensure equity and inclusion in renewable energy deployment. For more information look at: https://blueprint.raponline.org/system-supporting-ders/ for further information",
+    "source": "PROSEU"
+  },
+  {
+    "id": 28,
+    "type": "Non-monetary",
+    "category": "Recommendation",
+    "incentive": "Recommendation 3 - Add Community Criteria to Public Procurement",
+    "explanation": "Incentives can help level the playing field, but energy communities will remain at a disadvantage without structural measures. Public procurement rules and tenders should include community benefit criteria and simplified entry conditions, or preference points for citizen-led energy communities.",
+    "source": "PROSEU"
+  },
+  {
+    "id": 29,
+    "type": "Non-monetary",
+    "category": "Recommendation",
+    "incentive": "Recommendation 4 - Ensure Transparent and Inclusive Selection",
+    "explanation": "This barrier relates to the perception of fairness. Therefore, transparent and inclusive selection processes must be guaranteed. This requires clear governance rules and public oversight. For example with mandatory disclosure of selection criteria, the inclusion of civil society in decision-making and performing audits to ensure meaningful participation for energy community members.",
+    "source": "PROSEU"
+  },
+  {
+    "id": 30,
+    "type": "Non-monetary",
+    "category": "Recommendation",
+    "incentive": "Recommendation 5 - Mandate Project Management Standards",
+    "explanation": "Incentives alone cannot ensure operational quality when it comes to project management. These concerns should be addressed by making basic project management frameworks mandatory, such as technical audits, financial accountability and regular public reporting. Support from municipalities or third-party advisors can help.",
+    "source": "PROSEU"
+  },
+  {
+    "id": 31,
+    "type": "Non-monetary",
+    "category": "Recommendation",
+    "incentive": "Recommendation 6 - Set Maintenance Standards and Long-Term Support",
+    "explanation": "This barrier can be partially mitigated by incentives such as technical assistance, which help communities build local capacity to maintain and manage infrastructure. However, technical assistance alone is not enough to realistically address long-term technical and financial risks. Policies should introduce minimum maintenance standards and equipment warranties, and promote long-term service contracts or shared maintenance agreements to ensure reliability and build public trust.",
+    "source": "PROSEU"
+  },
+  {
+    "id": 32,
+    "type": "Non-monetary",
+    "category": "Recommendation",
+    "incentive": "Recommendation 7 - Create National Guidance for EU Provisions",
+    "explanation": "Incentives alone cannot achieve this; national coordination is essential.  Ministries and regulators should create dedicated guidance for implementing EU energy community provisions, adapted to the national legal, administrative, and social contexts.",
+    "source": "PROSEU"
+  },
+  {
+    "id": 33,
+    "type": "Non-monetary",
+    "category": "Recommendation",
+    "incentive": "Recommendation 8 - Align Laws and Define Renewable Energy Valleys",
+    "explanation": "Incentives alone cannot solve this deeper issue. National authorities should review and align existing laws that affect energy, land use, cooperatives, and local governance. A clear legal definition of Renewable Energy Valleys (REVs) is needed, along with simple rules for how citizens and communities can participate.  Crete could serve as a pilot region to test how permits, roles, and responsibilities can be better coordinated. Using lessons learned in Crete to design a national framework that supports REVs across the country and potentially the EU.",
+    "source": "PROSEU"
+  },
+  {
+    "id": 34,
+    "type": "Non-monetary",
+    "category": "Recommendation",
+    "incentive": "Recommendation 9 - Fast-Track Permits for Small-Scale REVs",
+    "explanation": "Community energy projects in Greece face the same permitting and licensing rules as large commercial actors. Authorities should create a separate fast-track procedure for small-scale, citizen-led REVs, including simplified documentation, and exemption thresholds. This could be supported by a dedicated digital portal ore a one-stop-shop where local governments and citizen groups can apply, track, and receive guidance on procedures.",
+    "source": "PROSEU"
+  },
+  {
+    "id": 35,
+    "type": "Non-monetary",
+    "category": "Recommendation",
+    "incentive": "Recommendation 10 - Reintroduce Targeted Incentives for Communities",
+    "explanation": "This is a core regulatory and financial gap that incentives alone cannot tackle. Although Greece transposed the EU definitions of energy communities, the regulatory framework still lacks dedicated support. National authorities should go beyond legal definitions and re-establish targeted incentives energy communities.",
+    "source": "PROSEU"
   }
 ]
