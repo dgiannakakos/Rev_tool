@@ -6,7 +6,6 @@ from enum import Enum
 
 
 # data imports
-from Co_benefits_KPIs import Co_benefits_KPIs
 from Economic_KPIs import Economic_KPIs
 from Environmental_KPIs import Environmental_KPIs
 from Social_KPIs import Social_KPIs
@@ -25,7 +24,6 @@ from incentives_id import incentives_id
 
 # All predefined KPIs in one dictionary
 KPI_CATEGORIES = {
-    "Co_benefits_KPIs": Co_benefits_KPIs,
     "Economic_KPIs": Economic_KPIs,
     "Environmental_KPIs": Environmental_KPIs,
     "Social_KPIs": Social_KPIs,
@@ -48,7 +46,6 @@ class EditCustomKPIInput(BaseModel):
     description: Optional[str] = None
 
 class KPICategory(str, Enum):
-    co_benefits = "Co_benefits_KPIs"
     economic = "Economic_KPIs"
     environmental = "Environmental_KPIs"
     social = "Social_KPIs"

@@ -1,104 +1,17 @@
 Economic_KPIs = {
 
-"Budget Management & Optimization (per project/technology)": {
-"EBO1": {
-    "Name": "Operational Costs Avoidance",
-    "Primary use": "Performance",
-    "Units of measurement": "EUR/kWh",
-    "Description": "Avoided operating costs by setting the CEL/REV-Lab."
-        },
-"EBO2": {
-    "Name": "Levelised Cost of Electricity",
-    "Primary use": "Planning",
-    "Units of measurement": "EUR/kWh",
-    "Description": "Average total cost to build and operate a power-generating asset over its lifetime divided by the total energy output of the asset over that lifetime."
-        },
-"EBO3": {
-    "Name": "Levelised Cost of Heat",
-    "Primary use": "Planning",
-    "Units of measurement": "EUR/kWh",
-    "Description": "Average total cost to build and operate a heat-generating asset over its lifetime divided by the total energy output of the asset over that lifetime."
-        },
-"EBO4": {
-    "Name": "Levelised Cost of Hydrogen",
-    "Primary use": "Planning",
-    "Units of measurement": "EUR/kg",
-    "Description": "A variable that indicates how much it costs to produce 1 kg of Hydrogen."
-        },
-"EBO5": {
-    "Name": "Levelised Cost of Charging",
-    "Primary use": "Planning",
-    "Units of measurement": "EUR/kWh",
-    "Description": "Average total cost charging an EV divided by the total energy charged."
-        },
-"EBO6": {
-    "Name": "Capital expenditure",
-    "Primary use": "Planning",
-    "Units of measurement": "EUR",
-    "Description": "Total value of financial investments or capital expenditures."
-        },
-"EBO7": {
-    "Name": "Operational expenditure",
-    "Primary use": "Planning",
-    "Units of measurement": "EUR/kWh , EUR",
-    "Description": "Sum of total operational costs expenditures on site, planned O&M and unscheduled maintenance."
-        },
-"EBO8": {
-    "Name": "Maintenance costs",
-    "Primary use": "Planning",
-    "Units of measurement": "EUR/kWh , EUR",
-    "Description": "Total maintenance expenditures to each technology provider (or demo partners)."
-        },
-"EBO9": {
-    "Name": "Financing costs",
-    "Primary use": "Planning",
-    "Units of measurement": "EUR",
-    "Description": "Total financing expenditures."
-        },
-"EBO10": {
-    "Name": "Resource cost per ton",
-    "Primary use": "Performance",
-    "Units of measurement": "EUR",
-    "Description": "The average cost incurred for handling or processing each metric ton of organic materials."
-        },
-"EBO11": {
-    "Name": "Land cost",
-    "Primary use": "Planning",
-    "Units of measurement": "EUR/m²",
-    "Description": "The cost of the land required for the installation of the RES technologies."
-        },
-"EBO12": {
-    "Name": "Grid cost (MV, HV)",
-    "Primary use": "Planning",
-    "Units of measurement": "EUR/MW",
-    "Description": "Cost associated with MV upgrades for RES connection to the distribution network."
-        },
-"EBO13": {
-    "Name": "Monetisation potential of EV flexibility",
-    "Primary use": "Performance",
-    "Units of measurement": "%",
-    "Description": "Increase in the monetisation potential of EV flexibility and V2x compared to current levels."
-        },
-"EBO14": {
-    "Name": "Implementation cost share",
-    "Primary use": "Performance",
-    "Units of measurement": "EUR",
-    "Description": "Represents the cost of a project per community when compared to the total cost for all the communities (can be adapted to other geographical scopes, for instance, neighbourhood)."
-        },
-},
-
-"Financial viability & Capital Efficiency":{
+"Financial viability" :{
 "EFV1": {
     "Name": "Net Present Value",
     "Primary use": "Performance",
-    "Units of measurement": "EUR",
-    "Description": "Present value of the entire project benefits including the design, installation, and execution phases. It represents the total money profitability of the project."
+    "Units of measurement": "MEUR",
+    "Description": "Present value of the entire project benefits including the design, installation and execution phases."
         },
 "EFV2": {
     "Name": "Life-cycle cost of energy generation",
     "Primary use": "Performance",
     "Units of measurement": "Years",
-    "Description": "The sum of all the costs throughout the lifetime of the energy investment, normalised to the energy generated. Total CAPEX & OPEX per electric and thermal generation, divided per the overall electric production and thermal production, in the technical/useful lifetime of the overall project (approx. 20/25 years)."
+    "Description": "The sum of all the costs throughout the lifetime of the energy investment, normalized to the energy generated."
         },
 "EFV3": {
     "Name": "Internal Rate of Return (IRR)",
@@ -109,43 +22,225 @@ Economic_KPIs = {
 "EFV4": {
     "Name": "Payback Period",
     "Primary use": "Performance",
-    "Units of measurement": "years",
+    "Units of measurement": "Years",
     "Description": "The period of time needed for the cumulative gains from an investment to equal the cumulative cost."
         },
 "EFV5": {
-    "Name": "Social Economic/ prosperity indicator",
+    "Name": "Social Economic/prosperity indicator",
     "Primary use": "Performance",
-    "Units of measurement": " ",
+    "Units of measurement": "-",
     "Description": "The amount of value globally produced by the project: quantity of euros produced by each euro invested to build the project."
         },
 "EFV6": {
     "Name": "Amount of financing offered to support participants in the community engagement process",
     "Primary use": "Performance",
     "Units of measurement": "EUR",
-    "Description": "This KPI measures the total monetary amount of financing provided to support individuals or groups involved in the community engagement process."
-        },
-"EFV7": {
-    "Name": "Emission Return on Invested Capital",
-    "Primary use": "Performance",
-    "Units of measurement": "EUR",
-    "Description": "Capital Invested per Kt CO2 reduced."
+    "Description": "The total monetary amount of financing provided to support individuals or groups involved in the community engagement process."
         },
 },
 
 "Direct cost savings for CEL members":{
 "ECS1": {
-    "Name": "Energy bills' reduction",
+    "Name": "Energy bills' reduction (heating)",
     "Primary use": "Tracking or Planning",
-    "Units of measurement": "kEUR/consumer",
-    "Description": "Economic saving in the energy bills for the citizens after setting the CEL/REV-Lab."
+    "Units of measurement": "EUR",
+    "Description": "Annual economic saving in the energy bills for the residential buildings compared to BAU (heating)."
         },
 "ECS2": {
-    "Name": "Savings in fuel costs when using EVs instead of conventional",
+    "Name": "Energy bills' reduction (cooling)",
+    "Primary use": "Tracking or Planning",
+    "Units of measurement": "EUR",
+    "Description": "Annual economic saving in the energy bills for the residential buildings compared to BAU (cooling)."
+        },
+"ECS3": {
+    "Name": "Energy bills' reduction (electricity)",
+    "Primary use": "Tracking or Planning",
+    "Units of measurement": "EUR",
+    "Description": "Annual economic saving in the energy bills for the residential buildings compared to BAU (electricity)."
+        },
+"ECS4": {
+    "Name": "Savings in fuel costs when using alternative fuel vehicles (AFVs) or green vehicles instead of conventional",
     "Primary use": "Tracking",
-    "Units of measurement": "kEUR/vehicle",
-    "Description": "The savings in fuel costs associated with the usage of electricity, particularly for EVs, compared to conventional vehicles (e.g., gasoline or diesel vehicles)."
+    "Units of measurement": "EUR/km",
+    "Description": "The savings in fuel costs compared to conventional vehicles (e.g., gasoline or diesel vehicles)."
         },
 },
 
+"Budget Management & Optimization (per project/technology)": {
+"EBO1": {
+    "Name": "Alkaline electrolysis CAPEX (annual level)",
+    "Primary use": "Planning",
+    "Units of measurement": "EUR/kW/year",
+    "Description": "Annual acquisition/investment cost (Alkaline electrolysis)."
+        },
+"EBO2": {
+    "Name": "Fuel cell CAPEX (annual level)",
+    "Primary use": "Planning",
+    "Units of measurement": "EUR/kW/year",
+    "Description": "Annual acquisition/investment cost (Fuel cell)."
+        },
+"EBO3": {
+    "Name": "Fuel cell electric bus CAPEX (annual level)",
+    "Primary use": "Planning",
+    "Units of measurement": "EUR/kW/year",
+    "Description": "Annual acquisition/investment cost (Fuel cell electric bus)."
+        },
+"EBO4": {
+    "Name": "Small wind energy converters CAPEX (annual level)",
+    "Primary use": "Planning",
+    "Units of measurement": "EUR/kW/year",
+    "Description": "Annual acquisition/investment cost (Small wind energy converters)."
+        },
+"EBO5": {
+    "Name": "PV technology CAPEX (annual level)",
+    "Primary use": "Planning",
+    "Units of measurement": "EUR/kW/year",
+    "Description": "Annual acquisition/investment cost (PV technology)."
+        },
+"EBO6": {
+    "Name": "Batteries CAPEX (annual level)",
+    "Primary use": "Planning",
+    "Units of measurement": "EUR/kW/year",
+    "Description": "Annual acquisition/investment cost (Batteries)."
+        },
+"EBO7": {
+    "Name": "Biogas system CAPEX (annual level)",
+    "Primary use": "Planning",
+    "Units of measurement": "EUR/kW/year",
+    "Description": "Annual acquisition/investment cost (Biogas system)."
+        },
+"EBO8": {
+    "Name": "Geoexchange system CAPEX (annual level)",
+    "Primary use": "Planning",
+    "Units of measurement": "EUR/kW/year",
+    "Description": "Annual acquisition/investment cost (Geoexchange system)."
+        },
+"EBO9": {
+    "Name": "Biomass system CAPEX (annual level)",
+    "Primary use": "Planning",
+    "Units of measurement": "EUR/kW/year",
+    "Description": "Annual acquisition/investment cost (Biomass system)."
+        },
+"EBO10": {
+    "Name": "Alkaline electrolysis OPEX (annual level)",
+    "Primary use": "Planning",
+    "Units of measurement": "EUR/kWh el/year",
+    "Description": "Annual operation/maintenance cost cost (Alkaline electrolysis)."
+        },
+"EBO11": {
+    "Name": "Fuel cell OPEX (annual level)",
+    "Primary use": "Planning",
+    "Units of measurement": "EUR/kWh el/year",
+    "Description": "Annual operation/maintenance cost (Fuel cell)."
+        },
+"EBO12": {
+    "Name": "Fuel cell electric bus OPEX (annual level)",
+    "Primary use": "Planning",
+    "Units of measurement": "EUR/kWh el/year",
+    "Description": "Annual operation/maintenance cost (Fuel cell electric bus)."
+        },
+"EBO13": {
+    "Name": "Small wind energy converters OPEX (annual level)",
+    "Primary use": "Planning",
+    "Units of measurement": "EUR/kW el/year",
+    "Description": "Annual operation/maintenance cost (Small wind energy converters)."
+        },
+"EBO14": {
+    "Name": "PV technology OPEX (annual level)",
+    "Primary use": "Planning",
+    "Units of measurement": "EUR/kWh el/year",
+    "Description": "Annual operation/maintenance cost (PV technology)."
+        },
+"EBO15": {
+    "Name": "Batteries OPEX (annual level)",
+    "Primary use": "Planning",
+    "Units of measurement": "EUR/kWh el/year",
+    "Description": "Annual operation/maintenance cost (Batteries)."
+        },
+"EBO16": {
+    "Name": "Biogas system OPEX (annual level)",
+    "Primary use": "Planning",
+    "Units of measurement": "EUR/kWh el/year",
+    "Description": "Annual operation/maintenance cost (Biogas system)."
+        },
+"EBO17": {
+    "Name": "Geoexchange system OPEX (annual level)",
+    "Primary use": "Planning",
+    "Units of measurement": "EUR/kWh el/year",
+    "Description": "Annual operation/maintenance cost (Geoexchange system)."
+        },
+"EBO18": {
+    "Name": "Biomass system OPEX (annual level)",
+    "Primary use": "Planning",
+    "Units of measurement": "EUR/kWh el/year",
+    "Description": "Annual operation/maintenance cost (Biomass system)."
+        },
+"EBO19": {
+    "Name": "Small wind energy converters levelized cost of electricity (annual cost)",
+    "Primary use": "Performance",
+    "Units of measurement": "EUR/kWh el/year",
+    "Description": "Total annual cost to operate a small wind energy converter divided by the total energy output over that year."
+        },
+"EBO20": {
+    "Name": "Biogas system levelized cost of electricity (annual cost)",
+    "Primary use": "Performance",
+    "Units of measurement": "EUR/kWh el/year",
+    "Description": "Total annual cost to operate a biogas system divided by the total energy output over that year."
+        },
+"EBO21": {
+    "Name": "PV system levelized cost of electricity (annual cost)",
+    "Primary use": "Performance",
+    "Units of measurement": "EUR/kWh el/year",
+    "Description": "Total annual cost to operate a PV system divided by the total energy output over that year."
+        },
+"EBO22": {
+    "Name": "Geoexchange system levelized cost of thermal energy (annual cost)",
+    "Primary use": "Performance",
+    "Units of measurement": "EUR/kWh th/year",
+    "Description": "Total annual cost to operate a geoexchange system divided by the total energy output over that year."
+        },
+"EBO23": {
+    "Name": "Biomass system levelized cost of thermal energy (annual cost)",
+    "Primary use": "Performance",
+    "Units of measurement": "EUR/kWh th/year",
+    "Description": "Total annual cost to operate a biomass system divided by the total energy output over that year."
+        },
+"EBO24": {
+    "Name": "Alkaline electrolysis levelized cost of hydrogen production (annual cost)",
+    "Primary use": "Performance",
+    "Units of measurement": "EUR/kg H₂/year",
+    "Description": "Total annual cost of alkaline electrolysis divided by the total H₂ production over that year."
+        },
+"EBO25": {
+    "Name": "Fuel cell levelized cost of hydrogen production (annual cost)",
+    "Primary use": "Performance",
+    "Units of measurement": "EUR/kg H₂/year",
+    "Description": "Total annual cost to operate fuel cell divided by the total H₂ production over that year."
+        },
+"EBO26": {
+    "Name": "Levelized Cost of Charging",
+    "Primary use": "Performance",
+    "Units of measurement": "-",
+    "Description": "Average total cost charging an EV divided by the total energy charged."
+        },
+"EBO27": {
+    "Name": "Resource cost per ton",
+    "Primary use": "Performance",
+    "Units of measurement": "-",
+    "Description": "The average cost incurred for handling or processing each metric ton of organic materials."
+        },
+"EBO28": {
+    "Name": "MV Grid cost",
+    "Primary use": "Planning",
+    "Units of measurement": "-",
+    "Description": "Cost associated with MV grid upgrades for RES connection to the distribution network."
+        },
+"EBO29": {
+    "Name": "HV Grid cost",
+    "Primary use": "Planning",
+    "Units of measurement": "-",
+    "Description": "Cost associated with HV grid upgrades for RES connection to the distribution network."
+        },
+},
 }
 
