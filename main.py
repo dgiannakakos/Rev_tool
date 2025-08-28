@@ -51,6 +51,11 @@ class KPICategory(str, Enum):
     social = "Social_KPIs"
     technological = "Technological_KPIs"
 
+class PrimaryUse(str, Enum):
+    planning = "Planning"
+    performance = "Performance"
+    tracking = "Tracking"
+
 class BarriersCategory(str, Enum):
     Resource_Scarcity = "Resource Scarcity"
     Public_Resistance = "Public Resistance"
@@ -77,12 +82,14 @@ class KPIInput(BaseModel):
     current_date: conint(ge=1)
     target_date: conint(ge=1)
     data_quality: conint(ge=1, le=5)
+    chosen_primary_use: Optional[PrimaryUse] = None
 
 class CustomKPIInput(BaseModel):
     category: KPICategory
     subcategory: str
     name: Optional[str] = None
-    primary_use: Optional[str] = None
+    #primary_use: Optional[str] = None
+    primary_use: PrimaryUse
     units: Optional[str] = None
     description: Optional[str] = None
 
@@ -255,9 +262,23 @@ def add_custom_kpi(kpi: CustomKPIInput):
     if subcategory not in custom_kpis[category]:
         custom_kpis[category][subcategory] = {}
 
-    # Generate new unique ID
-    existing_ids = list(custom_kpis[category][subcategory].keys())
-    new_id_num = len(existing_ids) + 1
+    # Collect ALL existing custom KPI IDs globally
+    all_existing_ids = []
+    for cat_data in custom_kpis.values():
+        for subcat_data in cat_data.values():
+            all_existing_ids.extend(subcat_data.keys())
+
+    # Find the next available global ID
+    max_num = 0
+    for kpi_id in all_existing_ids:
+        if kpi_id.startswith("added_KPI_"):
+            try:
+                num = int(kpi_id.split("_")[-1])
+                if num > max_num:
+                    max_num = num
+            except ValueError:
+                continue
+    new_id_num = max_num + 1
     new_id = f"added_KPI_{new_id_num}"
 
     # Add KPI metadata
@@ -545,3 +566,124 @@ def delete_custom_kpi(category: KPICategory, subcategory: str, kpi_id: str):
         del custom_kpis[cat]
 
     return {"message": f"KPI '{kpi_id}' deleted successfully from '{cat}/{subcategory}'."}
+
+
+
+
+
+
+@app.post("/kpis_score_primary_use")
+def calculate_kpi_scores_primary_use(data: KPIRequest):
+    primary_use_scores: Dict[str, Dict] = {}
+    seen_ids = set()
+
+    for kpi in data.selected_kpis:
+        # Ensure unique IDs
+        if kpi.id in seen_ids:
+            raise HTTPException(
+                status_code=400,
+                detail=f"Duplicate KPI ID found: '{kpi.id}'. Each KPI must be unique."
+            )
+        seen_ids.add(kpi.id)
+
+        # Ensure valid date logic
+        if kpi.target_date <= kpi.current_date:
+            raise HTTPException(
+                status_code=400,
+                detail=f"target_date ({kpi.target_date}) must be greater than current_date ({kpi.current_date}) for KPI '{kpi.id}'"
+            )
+
+        # Lookup predefined or custom KPI metadata
+        predefined_data = KPI_CATEGORIES.get(kpi.category.value, {})
+        custom_data = custom_kpis.get(kpi.category.value, {})
+
+        kpi_entry = None
+        for subcat in predefined_data.values():
+            if kpi.id in subcat:
+                kpi_entry = subcat[kpi.id]
+                break
+        if not kpi_entry:
+            for subcat in custom_data.values():
+                if kpi.id in subcat:
+                    kpi_entry = subcat[kpi.id]
+                    break
+
+        if not kpi_entry:
+            raise HTTPException(
+                status_code=400,
+                detail=f"KPI ID '{kpi.id}' not found under category '{kpi.category.value}'."
+            )
+
+        try:
+            score = calculate_kpi_score(
+                kpi.current_value, kpi.target_value,
+                kpi.current_date, kpi.target_date,
+                kpi.data_quality, data.a, data.b
+            )
+        except ValueError as e:
+            raise HTTPException(status_code=400, detail=str(e))
+
+        # Extract info
+        kpi_name = kpi_entry.get("Name", "")
+        primary_use_field = kpi_entry.get("Primary use", None)
+
+        if not primary_use_field:
+            raise HTTPException(
+                status_code=400,
+                detail=f"KPI '{kpi.id}' does not have a defined 'Primary use'."
+            )
+
+        # Handle multi-choice primary uses
+        if "/" in primary_use_field:
+            allowed_options = [opt.strip() for opt in primary_use_field.split("/")]
+
+            if not kpi.chosen_primary_use:
+                raise HTTPException(
+                    status_code=400,
+                    detail=(
+                        f"KPI '{kpi.id}' allows multiple primary uses ({allowed_options}). "
+                        f"You must provide 'chosen_primary_use'."
+                    )
+                )
+
+            if kpi.chosen_primary_use.value not in allowed_options:
+                raise HTTPException(
+                    status_code=400,
+                    detail=(
+                        f"Invalid chosen_primary_use '{kpi.chosen_primary_use.value}' "
+                        f"for KPI '{kpi.id}'. Allowed: {allowed_options}"
+                    )
+                )
+
+            final_primary_use = kpi.chosen_primary_use.value
+        else:
+            # Single option case
+            final_primary_use = primary_use_field
+
+        # Init if needed
+        if final_primary_use not in primary_use_scores:
+            primary_use_scores[final_primary_use] = {
+                "scores": [],
+                "kpis": []
+            }
+
+        primary_use_scores[final_primary_use]["scores"].append(score)
+        primary_use_scores[final_primary_use]["kpis"].append({
+            "id": kpi.id,
+            "name": kpi_name,
+            "current_date": kpi.current_date,
+            "target_date": kpi.target_date
+        })
+
+    # Final result
+    result = {}
+    for primary_use, values in primary_use_scores.items():
+        scores = values["scores"]
+        avg_score = round(sum(scores) / len(scores), 2)
+        result[primary_use] = {
+            "score": avg_score,
+            "level": determine_kpi_level(avg_score),
+            "kpis": values["kpis"]
+        }
+
+    return {"primary_use_scores": result}

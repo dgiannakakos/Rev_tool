@@ -3,7 +3,7 @@ Technological_KPIs = {
 "Grid Security": {
 "TGS1": {
     "Name": "Loss of Load Duration (Blackout Resilience)",
-    "Primary use": "Performance or Tracking",
+    "Primary use": "Performance/Tracking",
     "Units of measurement": "Minutes",
     "Description": "Loss of load time to withstand a potential blackout using available flexibility measured annually."
         },

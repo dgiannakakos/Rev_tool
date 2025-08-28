@@ -30,13 +30,13 @@ Social_KPIs = {
 "Energy access & affordability / Vulnerability to energy poverty": {
 "SEA1": {
     "Name": "Number of members of the CEL/REV-Lab within energy poverty threshold",
-    "Primary use": "Planning or Tracking",
+    "Primary use": "Planning/Tracking",
     "Units of measurement": "Number",
     "Description": "Numbers of members of the CEL/REV-Lab within energy poverty threshold throughout the period of examination (calculated for instance with energy expenditure to income ratio before joining an energy community)."
         },
 "SEA2": {
     "Name": "Share of buildings with EPC at each grade",
-    "Primary use": "Planning or Tracking",
+    "Primary use": "Planning/Tracking",
     "Units of measurement": "%",
     "Description": "Percentage of buildings in the CEL/REV-Lab in each of the A-G EPC levels throughout the period of examination."
         },

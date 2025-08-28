@@ -42,19 +42,19 @@ Economic_KPIs = {
 "Direct cost savings for CEL members":{
 "ECS1": {
     "Name": "Energy bills' reduction (heating)",
-    "Primary use": "Tracking or Planning",
+    "Primary use": "Tracking/Planning",
     "Units of measurement": "EUR",
     "Description": "Annual economic saving in the energy bills for the residential buildings compared to BAU (heating)."
         },
 "ECS2": {
     "Name": "Energy bills' reduction (cooling)",
-    "Primary use": "Tracking or Planning",
+    "Primary use": "Tracking/Planning",
     "Units of measurement": "EUR",
     "Description": "Annual economic saving in the energy bills for the residential buildings compared to BAU (cooling)."
         },
 "ECS3": {
     "Name": "Energy bills' reduction (electricity)",
-    "Primary use": "Tracking or Planning",
+    "Primary use": "Tracking/Planning",
     "Units of measurement": "EUR",
     "Description": "Annual economic saving in the energy bills for the residential buildings compared to BAU (electricity)."
         },
