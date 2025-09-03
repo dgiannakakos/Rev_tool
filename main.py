@@ -39,11 +39,7 @@ app = FastAPI()
 
 ## MODELS ##
 
-class EditCustomKPIInput(BaseModel):
-    name: Optional[str] = None
-    primary_use: Optional[str] = None
-    units: Optional[str] = None
-    description: Optional[str] = None
+
 
 class KPICategory(str, Enum):
     economic = "Economic_KPIs"
@@ -93,6 +89,12 @@ class CustomKPIInput(BaseModel):
     units: Optional[str] = None
     description: Optional[str] = None
 
+class EditCustomKPIInput(BaseModel):
+    name: Optional[str] = None
+    #primary_use: Optional[str] = None
+    primary_use: PrimaryUse
+    units: Optional[str] = None
+    description: Optional[str] = None
 
 class KPIRequest(BaseModel):
     selected_kpis: List[KPIInput]
@@ -547,27 +549,40 @@ def edit_custom_kpi(
 
 @app.delete("/delete_custom_kpi/{category}/{subcategory}/{kpi_id}")
 def delete_custom_kpi(category: KPICategory, subcategory: str, kpi_id: str):
-    cat = category.value
+    cat_value = category.value
 
-    if cat not in custom_kpis or subcategory not in custom_kpis[cat]:
-        raise HTTPException(status_code=404, detail=f"Custom KPI path '{cat}/{subcategory}' not found.")
+    # Check if category and subcategory exist in custom_kpis
+    if cat_value not in custom_kpis or subcategory not in custom_kpis[cat_value]:
+        raise HTTPException(
+            status_code=404,
+            detail=f"Custom KPI path '{cat_value}/{subcategory}' not found."
+        )
 
-    if kpi_id not in custom_kpis[cat][subcategory]:
-        raise HTTPException(status_code=404, detail=f"KPI ID '{kpi_id}' not found under '{cat}/{subcategory}'.")
+    # Remove the KPI if it exists in custom_kpis
+    kpis_dict = custom_kpis[cat_value][subcategory]
+    if kpi_id not in kpis_dict:
+        raise HTTPException(
+            status_code=404,
+            detail=f"KPI ID '{kpi_id}' not found under '{cat_value}/{subcategory}'."
+        )
 
-    del custom_kpis[cat][subcategory][kpi_id]
+    del kpis_dict[kpi_id]
 
-    # Clean up if the subcategory is now empty
-    if not custom_kpis[cat][subcategory]:
-        del custom_kpis[cat][subcategory]
+    # Clean up empty subcategory
+    if not kpis_dict:
+        del custom_kpis[cat_value][subcategory]
 
-    # Clean up if the category is now empty
-    if not custom_kpis[cat]:
-        del custom_kpis[cat]
+    # Clean up empty category
+    if not custom_kpis[cat_value]:
+        del custom_kpis[cat_value]
 
-    return {"message": f"KPI '{kpi_id}' deleted successfully from '{cat}/{subcategory}'."}
+    # Additional cleanup for merged get_kpis: remove any lingering keys
+    if category.value in KPI_CATEGORIES:
+        if subcategory in KPI_CATEGORIES[category.value]:
+            # Only remove if it exists in custom_kpis, i.e., a user-added KPI
+            KPI_CATEGORIES[category.value][subcategory].pop(kpi_id, None)
 
-
+    return {"message": f"KPI '{kpi_id}' deleted successfully from '{cat_value}/{subcategory}'."}
 
 
 
